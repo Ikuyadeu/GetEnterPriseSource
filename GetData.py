@@ -1,4 +1,4 @@
-# Usage: python3 GetData.py apiurl owner project
+# Usage: python3 GetData.py apiurl user owner project
 import sys
 import os
 
@@ -6,14 +6,18 @@ args = sys.argv
 print(args)
 
 url = args[1]
-owner = args[2]
-project = args[3]
+user = args[2]
+owner = args[3]
+project = args[4]
+# curl -i https://api.github.com/repos/Ikuyadeu/vscode-r/issues\?state=all\&sort=created > issues.json
+
+url = "https://api.github.com"
+owner = "Ikuyadeu"
+project = "vscode-r"
 
 url = url + "/repos/" + owner + "/" + project + "/"
 
-os.system("curl -i " + url + "issues\\?state=all\&sort=created > " + project + "-issues.json")
-os.system("curl -i " + url + "pulls\\?state=all\&sort=created > " + project + "-pulls.json")
-os.system("curl -i " + url + "issues/comments\\?state=all\&sort=created > " + project + "-comments.json")
-os.system("curl -i " + url + "branches\\?state=all\&sort=created > " + project + "-branchs.json")
-os.system("curl -i " + url + "commits\\?state=all\&sort=created > " + project + "-commits.json")
-os.system("curl -i " + url + "assignees\\?state=all\&sort=created > " + project + "-assignees.json")
+metricses = ["issues", "pulls", "issues/comments", "branches", "assignees"]
+
+for metrics in metricses:
+  os.system("curl -i "+ url + metrics + "\\?state=all\&sort=created\&per_page=100 > " + project + "-" + metrics.replace('/', '_') + ".json")
