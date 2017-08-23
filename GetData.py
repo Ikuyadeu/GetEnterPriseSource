@@ -12,7 +12,7 @@ project = args[4]
 
 url = url + "/repos/" + owner + "/" + project + "/"
 
-metricses = ["issues", "pulls", "issues/comments", "branches", "assignees", "contributors", "languages"]
+metricses = ["issues", "pulls", "issues/comments","pulls/comments", "branches", "assignees", "contributors", "languages"]
 
 for metrics in metricses:
   os.system("curl -u " + user + " "+ url + metrics + "\\?state=all\&sort=created\&per_page=100 > " + project + "-" + metrics.replace('/', '_') + ".json")
