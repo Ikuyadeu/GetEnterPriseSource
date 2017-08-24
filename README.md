@@ -20,3 +20,12 @@ https://developer.com/Fuji/helloプロジェクトにアカウントTaroでロ�
 ```
 python3 GetData.py http(s)://developer.com/api/v3 Taro Fuji hello
 ```
+
+## 開発者分析方法
+* 上のデータ取得を行う
+* GetDevelopers.pyをダウンロード
+* jsonファイルの入ったディレクトリとプロジェクト名を指定して実行
+上の例だと
+```
+python3 GetDevelopers.py . hello
+```
