@@ -35,6 +35,6 @@ python3 GetDevelopers.py . hello
 * GetPatch.pyをダウンロード
 * jsonファイルの入ったディレクトリとユーザー名、パスワードを指定して実行
 ```
-python3 GetPatch.py hello-pulls.json . Taro password
-
+mkdir Patchs
+python3 GetPatch.py hello-pulls.json ./Patchs Taro password
 ```
