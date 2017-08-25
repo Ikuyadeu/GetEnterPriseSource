@@ -25,4 +25,4 @@ with open(pulls_file, "r", encoding = "utf-8") as pulls:
 patch_urls = [(x["base"]["repo"]["url"] + "/commits/" + x["merge_commit_sha"] , x["number"]) for x in pulls]
 
 for patch_url, number in patch_urls:
-  os.system("curl -u " + user + ":" + password " -H \"Accept: application/vnd.github.v3.patch\" " + patch_url + " -o " + outdir + "/" + str(number) + ".patch")
+  os.system("curl -u " + user + ":" + password + " -H \"Accept: application/vnd.github.v3.patch\" " + patch_url + " -o " + outdir + "/" + str(number) + ".patch")
