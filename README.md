@@ -29,3 +29,12 @@ python3 GetData.py http(s)://developer.com/api/v3 Taro Fuji hello
 ```
 python3 GetDevelopers.py . hello
 ```
+
+## パッチ収集
+* GetDatapyで`XXXX-pulls.json`のようなファイルを取得
+* GetPatch.pyをダウンロード
+* jsonファイルの入ったディレクトリとユーザー名、パスワードを指定して実行
+```
+python3 GetPatch.py hello-pulls.json . Taro password
+
+```
