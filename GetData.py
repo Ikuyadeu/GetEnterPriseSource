@@ -23,6 +23,7 @@ for metrics in metricses:
   pages = []
   header = api + "/repos/" + owner + "/" + project + "/"
   while(True):
+    print(metrics + ":" + page)
     url = header + metrics + "?state=all&sort=created&per_page=6"
     resp = requests.get(url + '&page=' + str(page), auth=requests.auth.HTTPBasicAuth(user, password))
     data = json.loads(resp.content.decode('utf-8'))
