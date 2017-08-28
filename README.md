@@ -16,7 +16,7 @@
 python3 GetData.py http(s)://hostname/api/v3 GitHubユーザー名 Githubパスワード オーナー名 プロジェクト名
 ```
 例：
-https://developer.com/Fuji/helloプロジェクトにアカウントTaroでログインする場合
+https://developer.com/Fuji/hello プロジェクトにアカウントTaroでログインする場合
 ```
 python3 GetData.py http(s)://developer.com/api/v3 Taro password Fuji hello
 ```
