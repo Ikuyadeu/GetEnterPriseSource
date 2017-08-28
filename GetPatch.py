@@ -20,7 +20,7 @@ user = args[3]
 password = args[4]
 
 with open(pulls_file, "r", encoding = "utf-8") as pulls:
-  pulls = [x for x in json.load(pulls) if x["closed_at"] is not None]
+  pulls = [x for x in json.load(pulls) if x["closed_at"] is not None and x["merge_commit_sha"] is not None]
 
 patch_urls = [(x["base"]["repo"]["url"] + "/commits/" + x["merge_commit_sha"] , x["number"]) for x in pulls]
 
