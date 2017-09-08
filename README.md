@@ -38,3 +38,6 @@ python3 GetDevelopers.py . hello
 mkdir Patchs
 python3 GetPatch.py hello-pulls.json ./Patchs Taro password
 ```
+
+## データ分析
+* AbalyzeData.batを実行
