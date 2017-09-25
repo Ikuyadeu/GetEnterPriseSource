@@ -23,9 +23,9 @@ OUT_DIR = "out/"
 
 PROJECT_PATH = OWNER + "/" + PROJECT
 
-URL = "https://api.github.com/repos/" \
-      + PROJECT_PATH \
-      + "/commits"
+URL = "/".join(["https://api.github.com/repos",
+                PROJECT_PATH,
+                "commits"])
 
 RAW_URL = "https://raw.githubusercontent.com/" + PROJECT_PATH
 
@@ -41,24 +41,24 @@ while True:
     RESP = requests.get(URL,
                         params=PARAMS,
                         auth=AUTH)
-    print(RESP.url)
     CONTENT = json.loads(RESP.content.decode("utf-8"))
     if len(CONTENT) <= 1:
         break
     PARAMS["page"] += 1
     COMMITS.extend(CONTENT)
+    print("Get commits from %s" % RESP.url)
 
 # Output Commit log
 OUT_FILE_PATH = OUT_DIR + OWNER +"-" + PROJECT + ".json"
 with open(OUT_FILE_PATH, "w") as f:
     json.dump(COMMITS, f, indent=4)
-    print("Output commit log to " + OUT_FILE_PATH)
+    print("Output commit log to %s" % OUT_FILE_PATH)
 
 # Curl real files
 COMMITS_LEN = len(COMMITS)
 for i, commit in enumerate(reversed(COMMITS)):
-    FILE_URL = RAW_URL + "/" + commit["sha"] + "/" + PATH
+    FILE_URL = "/".join([RAW_URL, commit["sha"], PATH])
     CONTENT = requests.get(FILE_URL, auth=AUTH).content.decode("utf-8")
     with open(OUT_DIR + str(i) + "-" + PATH, "w") as f:
         f.write(CONTENT)
-    sys.stdout.write("\r%d / %d Output File..." % (i + 1, COMMITS_LEN))
+    sys.stdout.write("\r%d / %d Output File " % (i + 1, COMMITS_LEN))
