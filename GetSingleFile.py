@@ -3,8 +3,9 @@
 Summary: Get single file history and real file
 Usage: mkdir out
        pip3 install requests
-       python3 GetReadme.py YourGitHubID GitHubPassword owner project filePath
-       (e.g.) python3 python3 GetReadme.py GitTaro Gitpass Ikuyadeu vscode-r Readme.md
+       python3 GetSyngleFile.py YourGitHubID GitHubPassword owner project filePath
+       (e.g.) python3 GetSyngleFile.py GitTaro Gitpass Ikuyadeu vscode-r README.md
+Warning: This script can't get identify Readme.md README.md
 """
 import json
 import sys
@@ -31,20 +32,21 @@ RAW_URL = "https://raw.githubusercontent.com/" + PROJECT_PATH
 PAGE = 1
 COMMITS = []
 
+AUTH = requests.auth.HTTPBasicAuth(USER, PASSWORD)
+PARAMS = {"path": PATH,
+          "per_page": 100,
+          "page": 1,}
+
 # Get All commit log
 while True:
-    PARAMS = (
-        ("path", PATH),
-        ("per_page", 100),
-        ("page", PAGE),
-    )
+    PARAMS["page"] = PAGE
     RESP = requests.get(URL,
                         params=PARAMS,
-                        auth=requests.auth.HTTPBasicAuth(USER, PASSWORD))
+                        auth=AUTH)
+    print(RESP.url)
     DATA = json.loads(RESP.content.decode("utf-8"))
     if len(DATA) <= 1:
         break
-    print(URL + '&page=' + str(PAGE))
     PAGE += 1
     COMMITS.extend(DATA)
 
@@ -56,7 +58,7 @@ with open(OUT_DIR + OWNER +"-" + PROJECT + ".json", "w") as f:
 # Curl real files
 for commit in COMMITS:
     FILE_URL = RAW_URL + "/" + commit["sha"] + "/" + PATH
-    RESP = requests.get(FILE_URL, auth=requests.auth.HTTPBasicAuth(USER, PASSWORD))
+    RESP = requests.get(FILE_URL, auth=AUTH)
     CONTENT = RESP.content.decode("utf-8")
     with open(OUT_DIR + commit["sha"] + "-" + PATH, "w") as f:
         f.write(CONTENT)
