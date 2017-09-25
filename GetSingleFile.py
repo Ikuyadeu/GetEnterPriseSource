@@ -52,11 +52,13 @@ while True:
 OUT_FILE_PATH = OUT_DIR + OWNER +"-" + PROJECT + ".json"
 with open(OUT_FILE_PATH, "w") as f:
     json.dump(COMMITS, f, indent=4)
-    print("Output commit log to" + OUT_FILE_PATH)
+    print("Output commit log to " + OUT_FILE_PATH)
 
 # Curl real files
+COMMITS_LEN = len(COMMITS)
 for i, commit in enumerate(reversed(COMMITS)):
     FILE_URL = RAW_URL + "/" + commit["sha"] + "/" + PATH
     CONTENT = requests.get(FILE_URL, auth=AUTH).content.decode("utf-8")
     with open(OUT_DIR + str(i) + "-" + PATH, "w") as f:
         f.write(CONTENT)
+    sys.stdout.write("\r%d / %d Output File..." % (i + 1, COMMITS_LEN))
