@@ -20,20 +20,18 @@ PROJECT = ARGS[4]
 PATH = ARGS[5]
 OUT_DIR = "out/"
 
+PROJECT_PATH = OWNER + "/" + PROJECT
+
 URL = "https://api.github.com/repos/" \
-      + OWNER \
-      + "/" \
-      + PROJECT \
+      + PROJECT_PATH \
       + "/commits"
 
-RAW_URL = "https://raw.githubusercontent.com/" \
-          + OWNER \
-          + "/" \
-          + PROJECT
+RAW_URL = "https://raw.githubusercontent.com/" + PROJECT_PATH
 
 PAGE = 1
-PAGES = []
+COMMITS = []
 
+# Get All commit log
 while True:
     PARAMS = (
         ("path", PATH),
@@ -48,14 +46,17 @@ while True:
         break
     print(URL + '&page=' + str(PAGE))
     PAGE += 1
-    PAGES.extend(DATA)
+    COMMITS.extend(DATA)
 
+# Output Commit log
 with open(OUT_DIR + OWNER +"-" + PROJECT + ".json", "w") as f:
-    json.dump(PAGES, f, indent=4)
+    json.dump(COMMITS, f, indent=4)
     print("Output commit log to" + OUT_DIR + OWNER +"-" + PROJECT + ".json")
 
-for data in PAGES:
-    FILE_URL = RAW_URL + "/" + data["sha"] + "/" + PATH
+# Curl real files
+for commit in COMMITS:
+    FILE_URL = RAW_URL + "/" + commit["sha"] + "/" + PATH
     RESP = requests.get(FILE_URL, auth=requests.auth.HTTPBasicAuth(USER, PASSWORD))
-    with open(OUT_DIR + data["sha"] + "-" + PATH, "w") as f:
-        f.write(RESP.content.decode("utf-8"))
+    CONTENT = RESP.content.decode("utf-8")
+    with open(OUT_DIR + commit["sha"] + "-" + PATH, "w") as f:
+        f.write(CONTENT)
