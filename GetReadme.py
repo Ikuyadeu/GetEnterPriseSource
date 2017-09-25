@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """
+Summary: Get single file history and real file
 Usage: mkdir out
        pip3 install requests
        python3 GetReadme.py YourGitHubID GitHubPassword owner project filePath
