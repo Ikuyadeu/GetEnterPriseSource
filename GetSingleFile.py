@@ -4,7 +4,7 @@ Summary: Get single file history and real file
 Usage: mkdir out
        pip3 install requests
        python3 GetSyngleFile.py YourGitHubID GitHubPassword owner project filePath
-       (e.g.) python3 GetSyngleFile.py GitTaro Gitpass Ikuyadeu vscode-r README.md
+       (e.g.) python3 GetSyngleFile.py GitTaro Gitpass Ikuyadeu vscode-r package.json
 Warning: This script can't get identify Readme.md README.md
 """
 import json
